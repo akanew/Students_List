@@ -1,0 +1,79 @@
+<?php
+	require_once 'scripts/conf.php';
+	
+	$activate=false;
+	if(isset($_POST['send'])){	
+		$reg = new registration();
+		$regSuccess=$reg->reg($_POST['login'], $_POST['password_fst'], $_POST['password_scnd'], $_POST['email']);
+		if ($regSuccess=='success') {
+			$activate=false;
+			header('location: index.html?reg=success');
+			exit();			
+		}
+		else {
+			$activate=true;
+		}
+	}
+	else $activate=false;
+?>
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8"></meta>
+		<title>Регистрация</title>		
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/style.css">
+	</head>	
+	<body>
+		<div class="container i-container-pdng">
+			<div class="row">
+				<div class="panel panel-default ">
+					<div class="panel-body i-panel-body-pdng">
+						<div class="row">
+							<div class="col-lg-offset-2 col-lg-8 col-md-offset-2 col-md-8 col-sm-offset-1 col-sm-10">
+								<div class="spoiler">
+									<input type="checkbox" hidden
+									<?php
+										if(isset($activate) && $activate)
+											echo 'checked="checked"';
+										else echo '';
+									?>>
+									<div class="box">
+										<div class="alert alert-danger alert-offset" role="alert">
+											<?php 									
+												echo $regSuccess;
+											?>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 ">
+								<div class="panel panel-primary">
+									<div class="panel-heading"><b>Форма регистрации</b></div>
+										<div class="panel-body">
+											<form method="post" action="">
+												<div class="form-group">												
+													<label for="login">Логин: </label>
+													<input type="text" class="form-control" name="login" id="login"></input>
+													<label for="password_fst">Пароль: </label>
+													<input type="password" class="form-control" name="password_fst" id="password_fst"></input>
+													<label for="password_scnd">Подтверждение пароля: </label>
+													<input type="password" class="form-control" name="password_scnd" id="password_scnd"></input>
+													<label for="email">E-mail: </label>
+													<input type="email" class="form-control" name="email" id="email"></input>
+													<button type="submit" class="btn btn-default btn-primary btnSettings" name="send">Зарегистрироваться</button>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		<script src="js/jquery-3.0.0.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+	</body>
+</html>

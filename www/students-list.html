@@ -1,0 +1,96 @@
+<?php
+	require_once 'scripts/conf.php';
+	require_once 'scripts/conf2.php';
+	$auth = new auth();
+	
+	if (isset($_GET['exit'])) $auth->exit_user();
+	
+	if(!$auth->check()){
+		header('location: index.html');
+	}
+?>
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Список студентов</title>
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/style-st-lst.css">
+	</head>
+	
+	<body>
+		<div class="container">
+			<nav class="navbar navbar-inverse navbar-offset">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					</button>
+				</div>
+				<div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav nav-left-offset">
+						<li class="presentation">
+							<ul class="nav nav-pills navbar-left pills-offset">
+								<li role="presentation" class="pills-li">
+									<a href="students-list.html" class="a-clr">
+										<span aria-hidden="true" class="glyphicon glyphicon-th-list glyph-settings"></span>
+									Список студентов</a>
+								</li>
+							</ul>
+						</li>
+						<li class="presentation">
+							<ul class="nav nav-pills navbar-left pills-offset ">
+								<li role="presentation" class="pills-li">
+									<a href="student-adder.html" class="a-clr">
+									<span aria-hidden="true" class="glyphicon glyphicon-pencil glyph-settings"></span>
+									Добавить запись</a>
+								</li>
+							</ul>
+						</li>        
+					</ul>
+					<ul class="nav navbar-nav navbar-right nav-right-offset">
+						<li class="presentation">
+							<ul class="nav nav-pills navbar-left pills-offset"><li role="presentation" class="active"><a href="?exit">Выйти</a></li></ul>
+						</li>        
+					</ul>
+				</div>
+			</nav>
+			<div class="panel panel-default panel-pdng ">
+				<div class="panel-body"">
+					<div class="panel panel-primary ">
+						<div class="panel-heading">Информация о студентах</div>
+						<div class="table-responsive ">
+							<table class="table table-bordered">
+								<tr>
+									<td class="cell"><b>Группа</b></td>
+									<td class="cell"><b>ФИО</b></td>
+									<td class="cell"><b>Дата рождения</b></td>
+									<td class="cell"><b>Документ об образовании</b></td>
+								</tr>
+								<?php 
+									$res=$db_2->query("SELECT groups.name_group, students.name, students.surname, students.patronymic, students.birthdate, students.document FROM students INNER JOIN groups ON students.group_id=groups.group_id;",'array','');
+									while ($row = mysql_fetch_assoc($res)) {
+										echo '<tr>';
+										echo '<td class="cell">'.$row['name_group'].'</td>';
+										echo '<td class="cell">'.$row['surname'].' ';
+										echo $row['name'].' ';
+										echo $row['patronymic'].'</td>';
+										echo '<td class="cell">'.$row['birthdate'].'</td>';
+										echo '<td class="cell">'.$row['document'].'</td>';
+										echo '</tr>';
+									}
+								?>
+							</table>
+							</div>
+						</div>					
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<script src="js/jquery-3.0.0.min.js></script>
+		<script src="js/bootstrap.min.js"></script>
+	</body>
+</html>

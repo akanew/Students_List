@@ -1,0 +1,130 @@
+<?php
+	require_once 'scripts/conf.php';
+	require_once 'scripts/conf2.php';
+	
+	$auth = new auth();
+	
+	if (isset($_GET['exit'])) $auth->exit_user();
+	
+	if(!$auth->check()){
+		header('location: index.html');
+	}
+	
+	if(isset($_POST['send'])) {
+		$group_name = $_POST['group'];
+		$name = $_POST['name'];
+		$surname = $_POST['surname'];
+		$patronymic = $_POST['patronymic'];
+		$date = explode('/', $_POST['date']);
+		$birthdate = $date[2].'-'.$date[1].'-'.$date[0];
+		$document = $_POST['document'];
+		$activate = $db_2->add_student($group_name, $name, $surname, $patronymic, $birthdate, $document);
+		$alertType=($activate=="true")?'success':'danger';
+		$activate="true";
+	}
+?>
+
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Список студентов</title>
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/style-st-lst.css">
+	</head>
+	
+	<body>
+		<div class="container">
+			<nav class="navbar navbar-inverse navbar-offset">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					</button>
+				</div>
+				<div class="collapse navbar-collapse " id="bs-example-navbar-collapse-1">
+					<ul class="nav navbar-nav nav-left-offset">
+						<li class="presentation">
+							<ul class="nav nav-pills navbar-left pills-offset">
+								<li role="presentation" class="pills-li">
+									<a href="students-list.html" class="a-clr">
+										<span aria-hidden="true" class="glyphicon glyphicon-th-list glyph-settings"></span>
+									Список студентов</a>
+								</li>
+							</ul>
+						</li>
+						<li class="presentation">
+							<ul class="nav nav-pills navbar-left pills-offset ">
+								<li role="presentation" class="pills-li">
+									<a href="student-adder.html" class="a-clr">
+									<span aria-hidden="true" class="glyphicon glyphicon-pencil glyph-settings"></span>
+									Добавить запись</a>
+								</li>
+							</ul>
+						</li>        
+					</ul>
+					<ul class="nav navbar-nav navbar-right nav-right-offset">
+						<li class="presentation">
+							<ul class="nav nav-pills navbar-left pills-offset"><li role="presentation" class="active"><a href="?exit">Выйти</a></li></ul>
+						</li>        
+					</ul>
+				</div>
+			</nav>
+			<div class="panel panel-default panel-pdng">
+				<div class="panel-body">
+				
+					<div class="col-lg-offset-2 col-lg-8 col-md-offset-2 col-md-8 col-sm-offset-1 col-sm-10">
+								<div class="spoiler">
+									<input type="checkbox" hidden
+									<?php
+										if(isset($activate) && $activate=="true")
+											echo 'checked="checked"';
+										else echo '';
+									?>>
+									<div class="box">
+										<div class="alert <?php echo 'alert-'.$alertType?> alert-offset" role="alert">
+											<?php
+												if($alertType == 'success')
+													echo $db_2->success_print();
+												else if(isset($alertType)) echo $db_2->error_print();
+											?>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+					<div class="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 ">
+						<div class="panel panel-primary">
+							<div class="panel-heading">Создать запись</div>
+								<div class="panel-body">
+									<form method="post">
+										<div class="form-group">
+											<label for="group" class="control-label">Группа:</label>
+											<input class="form-control" name="group" id="group" placeholder="ИВТ-460" required>
+											<label for="surname" class="control-label">Фамилия:</label>
+											<input class="form-control" name="surname" id="surname" placeholder="Иванов" required>
+											<label for="name" class="control-label">Имя:</label>
+											<input class="form-control" name="name" id="name" placeholder="Иван" required>											
+											<label for="patronymic" class="control-label">Отчество:</label>
+											<input class="form-control" name="patronymic" id="patronymic" placeholder="Иванович" required>
+											<label for="date" class="control-label">Дата рождения:</label>
+											<input class="form-control" name="date" id="date" pattern="(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[012])/(19|20)\d\d" placeholder="07/12/1992" required>										
+											<label for="document" class="control-label">Документ об образовании:</label>
+											<textarea class="form-control" rows="2" name="document" id="document"></textarea>
+											<button type="submit" class="btn btn-default btn-primary btnSettings2" name='send'>Сохранить</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<script src="js/jquery-3.0.0.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+	</body>
+</html>

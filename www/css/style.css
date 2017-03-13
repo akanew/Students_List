@@ -1,0 +1,113 @@
+body {
+	margin: 0;
+	background-color: #edeef0;
+}
+
+
+.pdng-panel {
+	height: 80vh;
+	margin-top: 10vh;
+	margin-bottom: 10vh;
+}
+
+.pdng-col-2 {
+	margin-top: 10vh;/*???*/
+}
+
+.pdng-col {
+	margin-top: 10vh;/*???*/
+	margin-bottom: 10vh;/*???*/
+	min-height: 217px;
+}
+
+.btnSettings {
+	margin-top: 10px;
+	float:right;
+	padding-left: 30px;
+	padding-right: 30px;
+}
+
+.btnSettings2 {
+	padding-left: 30px;
+	padding-right: 30px;
+	margin-bottom: 10px;
+	/*margin-left: 10px;
+	margin-right: 10px;*/
+}
+
+.bs-col:nth-child(odd) {
+	background-color: bisque;
+	height: 100vh;
+}
+
+.bs-col:nth-child(even) {
+	background-color: coral;
+	height: 100vh;
+}
+/*.bs-cont {
+	background-color: yellow;
+	height: 100vh;
+}
+
+.bs-col:nth-child(odd) {
+	background-color: bisque;
+	height: 100vh;
+}
+
+.bs-col:nth-child(even) {
+	background-color: coral;
+	height: 100vh;
+}
+
+.bs-col-m {
+	background-color: coral;
+}
+
+.tablePos {
+	margin-top: 15px;
+}*/
+
+.spoiler >  input + .box {
+	display: none;
+}
+.spoiler >  input:checked + .box {
+	display: block;
+}
+
+.fill {
+	background-color: yellow;
+	height:50vh;
+}
+
+.alert-offset {
+	
+	margin-bottom:-20px;
+}
+
+.pager {
+	margin-bottom: -10px;
+}
+
+._previous{
+	margin-right: 5px;
+}
+
+._next{
+	margin-left: 5px;
+}
+
+.vcenter {
+  display: inline-block;
+//  float: none;
+  vertical-align: middle;
+}
+
+.i-container-pdng {
+	padding-bottom:10vh;
+	padding-top:10vh;
+}
+
+.i-panel-body-pdng {
+	padding-bottom:6vh;
+	padding-top:10vh;
+}
